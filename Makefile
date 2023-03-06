@@ -21,11 +21,19 @@ docker-build:: ## builds the docker image locally
 			-t $(IMAGE_TAG) \
 				$(WORKING_DIR)
 
+docker-build-clean:: ## cleanly builds the docker image locally
+		@docker build  \
+			--no-cache \
+			--pull \
+			-t $(IMAGE_TAG) \
+				$(WORKING_DIR)
+
 docker-run:: ## Runs the docker image
 		docker run \
 			--name archdesktop \
 			-it \
 			--cap-add=SYS_ADMIN \
+			--device /dev/fuse \
 			--privileged \
 			--tmpfs /tmp --tmpfs /run -v /sys/fs/cgroup:/sys/fs/cgroup:ro \
 				$(IMAGE_TAG)
@@ -35,10 +43,11 @@ docker-exec-shell:: ## Executes a shell in running container
 			-it \
 				archdesktop /bin/bash
 
-docker-run-shell:: ## Runs the docker image with bash
+docker-run-shell:: ## Runs the docker image with bash as entrypoint
 		@docker run \
 			-it \
-				$(IMAGE_TAG) /bin/bash
+			--entrypoint /bin/bash \
+				$(IMAGE_TAG)
 
 docker-rm:: ## Removes the running docker container
 		@docker rm -f archdesktop

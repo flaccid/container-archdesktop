@@ -1,2 +1,3 @@
 # container-archdesktop
-A container running Arch Linux with x2go and GNOME3
+
+A container running Arch Linux with x2go.

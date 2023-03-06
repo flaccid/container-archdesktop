@@ -14,11 +14,30 @@ RUN git clone https://aur.archlinux.org/yay.git && \
 FROM archlinux
 LABEL maintainer="Chris Fordham <chris@fordham.id.au>"
 COPY --from=builder /usr/src/yay/*.pkg.tar.zst /tmp/
+COPY entry.sh /usr/local/bin/entry.sh
 ARG user=vdi
 RUN pacman -Syu --noconfirm && \
 	pacman -U --noconfirm /tmp/yay*.pkg.tar.zst && \
- 	pacman -S --noconfirm base-devel bind curl iputils nmap wget openssh sudo && \
+ 	pacman -S --noconfirm \
+ 		base-devel \
+ 		bind \
+ 		curl \
+ 		iputils \
+ 		nmap \
+ 		wget \
+ 		openssh \
+ 		sudo \
+ 		plasma \
+ 		openbox \
+ 		xterm \
+ 		xorg-xclock \
+ 		xorg-xcalc \
+ 		xorg-xauth \
+ 		xorg-xeyes \
+ 		ttf-droid && \
  	useradd --system --create-home --shell /bin/bash "$user" && \
 	echo "$user ALL=(ALL:ALL) NOPASSWD:ALL" > /etc/sudoers.d/$user
 USER "$user"
 RUN yay -S --noconfirm x2goserver
+USER root
+ENTRYPOINT ["/usr/local/bin/entry.sh"]
