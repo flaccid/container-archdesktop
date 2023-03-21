@@ -3,6 +3,7 @@ IMAGE_NAME = archdesktop
 IMAGE_VERSION = latest
 IMAGE_ORG = flaccid
 IMAGE_TAG = $(DOCKER_REGISTRY)/$(IMAGE_ORG)/$(IMAGE_NAME):$(IMAGE_VERSION)
+KUBE_NAMESPACE = default
 
 WORKING_DIR := $(shell pwd)
 
@@ -58,13 +59,13 @@ docker-test:: ## tests the runtime of the docker image in a basic sense
 
 helm-install:: ## installs using helm from chart in repo
 		@helm install \
-			-f helm-values.yaml \
+			-f values.yaml \
 			--namespace $(KUBE_NAMESPACE) \
 				archdesktop charts/archdesktop
 
 helm-upgrade:: ## upgrades deployed helm release
 		@helm upgrade \
-			-f helm-values.yaml \
+			-f values.yaml \
 			--namespace $(KUBE_NAMESPACE) \
 				archdesktop charts/archdesktop
 
@@ -77,7 +78,7 @@ helm-reinstall:: helm-uninstall helm-install ## Uninstalls the helm release, the
 
 helm-render:: ## prints out the rendered chart
 		@helm install \
-			-f helm-values.yaml \
+			-f values.yaml \
 			--namespace $(KUBE_NAMESPACE) \
 			--dry-run \
 			--debug \
@@ -85,7 +86,7 @@ helm-render:: ## prints out the rendered chart
 
 helm-validate:: ## runs a lint on the helm chart
 		@helm lint \
-			-f helm-values.yaml \
+			-f values.yaml \
 			--namespace $(KUBE_NAMESPACE) \
 				charts/archdesktop
 
