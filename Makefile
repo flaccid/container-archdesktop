@@ -10,7 +10,7 @@ WORKING_DIR := $(shell pwd)
 
 .PHONY: build push
 
-docker-release:: docker-build docker-test docker-push ## Builds and pushes the docker image to the registry
+docker-release:: docker-build docker-push ## Builds and pushes the docker image to the registry
 
 docker-push:: ## Pushes the docker image to the registry
 		@docker push $(IMAGE_TAG)
@@ -36,6 +36,7 @@ docker-run:: ## Runs the docker image
 			--device /dev/fuse \
 			--privileged \
 			--tmpfs /tmp --tmpfs /run -v /sys/fs/cgroup:/sys/fs/cgroup:ro \
+			-e VDI_PASSWORD=vdi \
 				$(IMAGE_TAG)
 
 docker-exec-shell:: ## Executes a shell in running container

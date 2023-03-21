@@ -40,4 +40,6 @@ RUN	pacman -Syu --noconfirm && \
 USER "$user"
 RUN yay -S --noconfirm x2goserver
 USER root
+VOLUME /etc/ssh
+EXPOSE 22/tcp
 ENTRYPOINT ["/usr/local/bin/entry.sh"]
