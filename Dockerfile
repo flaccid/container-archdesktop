@@ -27,8 +27,26 @@ RUN	pacman -Syu --noconfirm && \
 		wget \
 		openssh \
 		sudo \
+		ark \
+		gnome \
+		gnome-calculator \
+		gnome-characters \
 		plasma \
+		lxde \
 		openbox \
+		obconf \
+		mate \
+		xfce4 \
+		lxqt \
+		icewm \
+		cinnamon \
+		chromium \
+		firefox \
+		vivaldi \
+		libreoffice-still \
+		nautilus \
+		nano \
+		gvim \
 		xterm \
 		xorg-xclock \
 		xorg-xcalc \
@@ -38,7 +56,7 @@ RUN	pacman -Syu --noconfirm && \
 	useradd --system --create-home --shell /bin/bash "$user" && \
 	echo "$user ALL=(ALL:ALL) NOPASSWD:ALL" > /etc/sudoers.d/$user
 USER "$user"
-RUN yay -S --noconfirm x2goserver
+RUN yay -S --noconfirm x2goserver joe google-chrome
 USER root
 VOLUME /etc/ssh
 EXPOSE 22/tcp
