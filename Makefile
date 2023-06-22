@@ -7,9 +7,9 @@ KUBE_NAMESPACE = default
 
 WORKING_DIR := $(shell pwd)
 
-.DEFAULT_GOAL := build
+.DEFAULT_GOAL := help
 
-.PHONY: build push
+.PHONY: build
 
 docker-release:: docker-build docker-push ## Builds and pushes the docker image to the registry
 
@@ -89,6 +89,16 @@ helm-validate:: ## runs a lint on the helm chart
 			-f values.yaml \
 			--namespace $(KUBE_NAMESPACE) \
 				charts/archdesktop
+
+helm-package:: ## packages the helm chart into an archive
+		@helm package charts/archdesktop
+
+helm-index:: ## creates/updates the helm repo index file
+		@helm repo index --url https://flaccid.github.io/container-archdesktop/ .
+
+helm-flush:: ## removes local helm packages and index file
+		@rm -f ./pritunl-*.tgz
+		@rm -f index.yaml
 
 # A help target including self-documenting targets (see the awk statement)
 define HELP_TEXT
