@@ -21,7 +21,9 @@ echo 'starting sshd...'
 
 echo 'starting dbus-daemon..'
 systemd-machine-id-setup
-/usr/bin/dbus-daemon --system --fork --nopidfile
+/usr/bin/dbus-daemon --system --fork --nopidfile --address="unix:path=/run/dbus/socket"
+echo "export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/dbus/socket" > /etc/profile.d/dbus.sh
+chmod +x -v /etc/profile.d/dbus.sh
 
 echo 'starting x2gosessions...'
 /usr/sbin/x2gocleansessions --debug
