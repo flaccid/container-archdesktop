@@ -19,5 +19,9 @@ ssh-keygen -A
 echo 'starting sshd...'
 /usr/sbin/sshd -D &
 
+echo 'starting dbus-daemon..'
+systemd-machine-id-setup
+/usr/bin/dbus-daemon --system --fork --nopidfile
+
 echo 'starting x2gosessions...'
 /usr/sbin/x2gocleansessions --debug
