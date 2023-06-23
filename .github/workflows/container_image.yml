@@ -6,7 +6,7 @@ on:
 
 jobs:
   push_to_registry:
-    name: Push container image to Docker Hub
+    name: Build and push container image to Docker Hub
     runs-on: ubuntu-latest
     steps:
       - name: Check out the repo
@@ -30,5 +30,5 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: flaccid/archdesktop:latest
           labels: ${{ steps.meta.outputs.labels }}

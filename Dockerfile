@@ -58,9 +58,13 @@ RUN	pacman -Syu --noconfirm && \
 		ttf-droid && \
 	useradd --system --create-home --shell /bin/bash "$user" && \
 	echo "$user ALL=(ALL:ALL) NOPASSWD:ALL" > /etc/sudoers.d/$user && \
-	rm -Rf /tmp/*
 USER "$user"
-RUN yay -S --noconfirm x2goserver joe google-chrome
+RUN yay -S --noconfirm \
+	x2goserver \
+	joe \
+	google-chrome \
+	sudo pacman -Scc --noconfirm && \
+	sudo rm -Rf /tmp/*
 USER root
 VOLUME /etc/ssh
 EXPOSE 22/tcp
