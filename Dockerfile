@@ -18,6 +18,9 @@ COPY entry.sh /usr/local/bin/entry.sh
 ARG user=vdi
 RUN	pacman -Syu --noconfirm && \
 	pacman -U --noconfirm /tmp/yay*.pkg.tar.zst && \
+	pacman -S --noconfirm reflector rsync && \
+	reflector --latest 5 --sort rate --save /etc/pacman.d/mirrorlist && \
+	pacman -Sy && \
 	pacman -S --noconfirm \
 		base-devel \
 		bind \
@@ -54,7 +57,8 @@ RUN	pacman -Syu --noconfirm && \
 		xorg-xeyes \
 		ttf-droid && \
 	useradd --system --create-home --shell /bin/bash "$user" && \
-	echo "$user ALL=(ALL:ALL) NOPASSWD:ALL" > /etc/sudoers.d/$user
+	echo "$user ALL=(ALL:ALL) NOPASSWD:ALL" > /etc/sudoers.d/$user && \
+	rm -Rf /tmp/*
 USER "$user"
 RUN yay -S --noconfirm x2goserver joe google-chrome
 USER root
