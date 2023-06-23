@@ -57,7 +57,7 @@ RUN	pacman -Syu --noconfirm && \
 		xorg-xeyes \
 		ttf-droid && \
 	useradd --system --create-home --shell /bin/bash "$user" && \
-	echo "$user ALL=(ALL:ALL) NOPASSWD:ALL" > /etc/sudoers.d/$user && \
+	echo "$user ALL=(ALL:ALL) NOPASSWD:ALL" > /etc/sudoers.d/$user
 USER "$user"
 RUN yay -S --noconfirm \
 	x2goserver \
