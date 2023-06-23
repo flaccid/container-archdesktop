@@ -60,9 +60,9 @@ RUN	pacman -Syu --noconfirm && \
 	echo "$user ALL=(ALL:ALL) NOPASSWD:ALL" > /etc/sudoers.d/$user
 USER "$user"
 RUN yay -S --noconfirm \
-	x2goserver \
-	joe \
-	google-chrome \
+		google-chrome \
+		joe \
+		x2goserver && \
 	sudo pacman -Scc --noconfirm && \
 	sudo rm -Rf /tmp/*
 USER root
