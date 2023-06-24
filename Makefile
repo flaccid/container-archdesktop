@@ -22,6 +22,13 @@ docker-build:: ## builds the docker image locally
 			-t $(IMAGE_TAG) \
 				$(WORKING_DIR)
 
+docker-build-systemd:: ## builds the docker image locally (systemd version)
+		@docker build  \
+			--pull \
+			--file Dockerfile.systemd \
+			-t $(DOCKER_REGISTRY)/$(IMAGE_ORG)/$(IMAGE_NAME):systemd \
+				$(WORKING_DIR)				
+
 docker-build-clean:: ## cleanly builds the docker image locally
 		@docker build  \
 			--no-cache \
