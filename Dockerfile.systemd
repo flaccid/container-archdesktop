@@ -1,0 +1,4 @@
+FROM flaccid/archdesktop
+RUN pacman -Syu --noconfirm systemd
+VOLUME ["/sys/fs/cgroup"]
+ENTRYPOINT ["/sbin/init"]
