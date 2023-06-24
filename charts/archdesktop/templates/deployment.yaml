@@ -42,15 +42,9 @@ spec:
               containerPort: {{ .Values.service.port }}
               protocol: TCP
           readinessProbe:
-            tcpSocket:
-              port: 22
-            initialDelaySeconds: 5
-            periodSeconds: 10
+{{- toYaml .Values.readinessProbe | nindent 12 }}
           livenessProbe:
-            tcpSocket:
-              port: 22
-            initialDelaySeconds: 15
-            periodSeconds: 20
+{{- toYaml .Values.livenessProbe | nindent 12 }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}

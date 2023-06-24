@@ -27,7 +27,7 @@ docker-build-systemd:: ## builds the docker image locally (systemd version)
 			--pull \
 			--file Dockerfile.systemd \
 			-t $(DOCKER_REGISTRY)/$(IMAGE_ORG)/$(IMAGE_NAME):systemd \
-				$(WORKING_DIR)				
+				$(WORKING_DIR)
 
 docker-build-clean:: ## cleanly builds the docker image locally
 		@docker build  \
@@ -46,6 +46,15 @@ docker-run:: ## Runs the docker image
 			--tmpfs /tmp --tmpfs /run -v /sys/fs/cgroup:/sys/fs/cgroup:ro \
 			-e VDI_PASSWORD=vdi \
 				$(IMAGE_TAG)
+
+docker-run-systemd:: ## Runs the docker image (systemd version)
+		docker run \
+			--name archdesktop \
+			-it \
+			--privileged \
+			--volume /sys/fs/cgroup:/sys/fs/cgroup:ro \
+			-e VDI_PASSWORD=vdi \
+				$(DOCKER_REGISTRY)/$(IMAGE_ORG)/$(IMAGE_NAME):systemd
 
 docker-exec-shell:: ## Executes a shell in running container
 		@docker exec \

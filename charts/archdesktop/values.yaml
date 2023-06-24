@@ -32,9 +32,6 @@ securityContext: {}
   # runAsNonRoot: true
   # runAsUser: 1000
 
-archdesktop:
-  env: []
-
 service:
   type: ClusterIP
   port: 22
@@ -63,3 +60,17 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+readinessProbe:
+  tcpSocket:
+    port: 22
+  initialDelaySeconds: 5
+  periodSeconds: 10
+livenessProbe:
+  tcpSocket:
+    port: 22
+  initialDelaySeconds: 15
+  periodSeconds: 20
+
+archdesktop:
+  env: []
