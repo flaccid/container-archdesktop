@@ -3,22 +3,12 @@ entries:
   archdesktop:
   - apiVersion: v2
     appVersion: 0.1.0
-    created: "2023-06-24T16:07:56.797392045+10:00"
+    created: "2023-06-24T17:29:32.972703595+10:00"
     description: A Helm chart for Kubernetes
-    digest: 0d7c40c6012632f94091cd222b400ae280ea64d7505499ea36627f757ed7e2ed
+    digest: 6d33cd35fe864730b7d826e50cbbf563a1dd9e5d4ffc538cb46654f0fa10cfa1
     name: archdesktop
     type: application
     urls:
-    - https://flaccid.github.io/container-archdesktop/archdesktop-0.2.1.tgz
-    version: 0.2.1
-  - apiVersion: v2
-    appVersion: 0.1.0
-    created: "2023-06-24T16:07:56.789742813+10:00"
-    description: A Helm chart for Kubernetes
-    digest: 6d1d24ead4824c0ccb1f8038c9e19a0e0fcc0a137b58bd08f536488d6104b2b5
-    name: archdesktop
-    type: application
-    urls:
-    - https://flaccid.github.io/container-archdesktop/archdesktop-0.2.0.tgz
-    version: 0.2.0
-generated: "2023-06-24T16:07:56.777636098+10:00"
+    - https://flaccid.github.io/container-archdesktop/archdesktop-0.2.2.tgz
+    version: 0.2.2
+generated: "2023-06-24T17:29:32.964448204+10:00"
