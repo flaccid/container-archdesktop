@@ -24,6 +24,12 @@ docker-build:: ## builds the docker image locally
 
 docker-build-systemd:: ## builds the docker image locally (systemd version)
 		@docker build  \
+			--file Dockerfile.systemd \
+			-t $(DOCKER_REGISTRY)/$(IMAGE_ORG)/$(IMAGE_NAME):systemd \
+				$(WORKING_DIR)
+
+docker-build-systemd-pull:: ## builds the docker image locally with pre-pull (systemd version)
+		@docker build  \
 			--pull \
 			--file Dockerfile.systemd \
 			-t $(DOCKER_REGISTRY)/$(IMAGE_ORG)/$(IMAGE_NAME):systemd \
@@ -45,6 +51,21 @@ docker-run:: ## Runs the docker image
 			--privileged \
 			--tmpfs /tmp --tmpfs /run -v /sys/fs/cgroup:/sys/fs/cgroup:ro \
 			-e VDI_PASSWORD=vdi \
+				$(IMAGE_TAG)
+
+docker-run-test:: ## runs the docker image (testing)
+		docker run \
+			--name archdesktop \
+    		-e DISPLAY=${DISPLAY} \
+    		-v /tmp/.X11-unix:/tmp/.X11-unix \
+    		-v ${HOME}/.Xauthority:/root/.Xauthority \
+			-v /sys:/sys \
+    		--net=host \
+			--privileged \
+			-it \
+			--rm \
+			-e VDI_PASSWORD=vdi \
+			-e DESKTOP_MODE=chrome \
 				$(IMAGE_TAG)
 
 docker-run-systemd:: ## Runs the docker image (systemd version)
