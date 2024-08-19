@@ -59,7 +59,20 @@ docker-run-chrome:: ## runs the docker image (chrome)
     		-e DISPLAY=${DISPLAY} \
     		-v /tmp/.X11-unix:/tmp/.X11-unix \
     		-v ${HOME}/.Xauthority:/root/.Xauthority \
-			-v /sys:/sys \
+    		--net=host \
+			--privileged \
+			-it \
+			--rm \
+			-e VDI_PASSWORD=vdi \
+			-e DESKTOP_MODE=chrome \
+				$(IMAGE_TAG)
+
+docker-run-chrome-host:: ## runs the docker image (chrome desktop mode w/ host profile)
+		docker run \
+			--name archdesktop \
+    		-e DISPLAY=${DISPLAY} \
+    		-v /tmp/.X11-unix:/tmp/.X11-unix \
+    		-v ${HOME}/.Xauthority:/root/.Xauthority \
 			-v /home:/mnt/host/home \
     		--net=host \
 			--privileged \
@@ -78,24 +91,6 @@ docker-run-testing:: ## runs the docker image (new testing)
 			-v /sys:/sys \
 			-v /run/user/$(shell id -u):/run/user/host \
 			-v /run/dbus/system_bus_socket:/run/dbus/system_bus_socket \
-    		--net=host \
-			--privileged \
-			-it \
-			--rm \
-			-e VDI_PASSWORD=vdi \
-			-e DESKTOP_MODE=chrome \
-				$(IMAGE_TAG)
-
-docker-run-chrome-host:: ## runs the docker image (chrome desktop mode w/ host profile)
-		docker run \
-			--name archdesktop \
-    		-e DISPLAY=${DISPLAY} \
-    		-v /tmp/.X11-unix:/tmp/.X11-unix \
-    		-v ${HOME}/.Xauthority:/root/.Xauthority \
-			-v ${HOME}/.config/google-chrome:/root/.config/google-chrome \
-			-v /sys:/sys \
-			-v /run/dbus/system_bus_socket:/run/dbus/system_bus_socket \
-			-v /run/user/89377:/run/user/89377 \
     		--net=host \
 			--privileged \
 			-it \
