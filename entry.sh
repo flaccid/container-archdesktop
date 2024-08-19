@@ -19,14 +19,45 @@ ssh-keygen -A
 echo 'starting sshd...'
 /usr/sbin/sshd -D &
 
-echo 'starting dbus-daemon...'
-systemd-machine-id-setup
-/usr/bin/dbus-daemon --system --fork --nopidfile --address="unix:path=/run/dbus/system_bus_socket"
+if ! [ -e /etc/machine-id ]; then
+	systemd-machine-id-setup
+fi
 
-echo 'adding system profiles...'
-echo "export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/dbus/system_bus_socket" > /etc/profile.d/dbus.sh
-echo "export FONTCONFIG_PATH=/etc/fonts" > /etc/profile.d/fonts.sh
-chmod +x -v /etc/profile.d/dbus.sh /etc/profile.d/fonts.sh
+echo 'starting dbus-daemon...'
+export XDG_RUNTIME_DIR=/run/user/89377
+export DBUS_SESSION_BUS_ADDRESS=unix:path=$XDG_RUNTIME_DIR/bus
+/usr/bin/dbus-daemon \
+	--session --address="$DBUS_SESSION_BUS_ADDRESS" \
+	--fork \
+	--nopidfile \
+	--syslog-only
+
+#/usr/bin/dbus-daemon --system --fork --nopidfile --address="unix:path=/run/dbus/system_bus_socket"
+#echo 'adding system profiles...'
+#echo "export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/dbus/system_bus_socket" > /etc/profile.d/dbus.sh
+#echo "export FONTCONFIG_PATH=/etc/fonts" > /etc/profile.d/fonts.sh
+#chmod +x -v /etc/profile.d/dbus.sh /etc/profile.d/fonts.sh
 
 echo 'starting x2gosessions...'
-/usr/sbin/x2gocleansessions --debug
+/usr/sbin/x2gocleansessions
+
+#su - "$VDI_USER"
+
+echo "desktop mode: $DESKTOP_MODE"
+
+case "$DESKTOP_MODE" in
+	chrome)
+google-chrome-stable \
+		--no-default-browser-check \
+		--no-sandbox \
+		--user-data-dir=/root/.config/google-chrome/Default \
+		--disable-dev-shm-usage \
+		--disable-gpu \
+			https://onpoint.recipes/
+      ;;
+   *)
+		echo 'no valid desktop mode set.'
+     ;;
+esac
+
+#echo "> $@" && exec "$@"

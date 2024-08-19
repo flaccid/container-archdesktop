@@ -60,6 +60,8 @@ docker-run-test:: ## runs the docker image (testing)
     		-v /tmp/.X11-unix:/tmp/.X11-unix \
     		-v ${HOME}/.Xauthority:/root/.Xauthority \
 			-v /sys:/sys \
+			-v /run/dbus/system_bus_socket:/run/dbus/system_bus_socket \
+			-v /run/user/89377:/run/user/89377 \
     		--net=host \
 			--privileged \
 			-it \
