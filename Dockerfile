@@ -50,10 +50,11 @@ RUN	pacman -Syu --noconfirm && \
 	vivaldi \
 	wget \
 	xfce4 \
-	xorg-xclock \
-	xorg-xcalc \
 	xorg-xauth \
+	xorg-xcalc \
+	xorg-xclock \
 	xorg-xeyes \
+	xorg-xhost \
 	xterm && \
 	useradd --system --create-home --shell /bin/bash "$user" && \
 	echo "$user ALL=(ALL:ALL) NOPASSWD:ALL" > /etc/sudoers.d/$user

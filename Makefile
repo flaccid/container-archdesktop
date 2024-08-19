@@ -53,7 +53,23 @@ docker-run:: ## Runs the docker image
 			-e VDI_PASSWORD=vdi \
 				$(IMAGE_TAG)
 
-docker-run-chrome:: ## runs the docker image (chrome desktop mode)
+docker-run-chrome:: ## runs the docker image (chrome)
+		docker run \
+			--name archdesktop \
+    		-e DISPLAY=${DISPLAY} \
+    		-v /tmp/.X11-unix:/tmp/.X11-unix \
+    		-v ${HOME}/.Xauthority:/root/.Xauthority \
+			-v /sys:/sys \
+			-v /home:/mnt/host/home \
+    		--net=host \
+			--privileged \
+			-it \
+			--rm \
+			-e VDI_PASSWORD=vdi \
+			-e DESKTOP_MODE=chrome \
+				$(IMAGE_TAG)
+
+docker-run-testing:: ## runs the docker image (new testing)
 		docker run \
 			--name archdesktop \
     		-e DISPLAY=${DISPLAY} \
